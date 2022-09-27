@@ -8,7 +8,6 @@ COPY . /app
 RUN npm install
 RUN npm run build
 
-# Expose is NOT supported by Heroku
-# $PORT is set by Heroku
+ENV PORT=8080
+EXPOSE 8080
 
-CMD ["npm", "start"]

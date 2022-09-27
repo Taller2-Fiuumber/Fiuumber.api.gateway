@@ -1,13 +1,24 @@
-version: "2"
+version: '3'
 services:
-  node:
-    image: "node:16"
-    user: "node"
-    working_dir: /home/node/app
-    environment:
-      - DEV_APP_PORT=${DEV_APP_PORT}
-    volumes:
-      - .:/home/node/app
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: "npm start"
     ports:
-      - ${DEV_APP_PORT}:${DEV_APP_PORT}
-    command: "npm run dev"
+      - "8080:8080"
+    expose:
+      - 8080
+    volumes:
+        - .:/app
+    links:
+      - database
+    depends_on:
+      - database
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: example
+        POSTGRES_DB: postgres
+    networks:
+      - default
+
