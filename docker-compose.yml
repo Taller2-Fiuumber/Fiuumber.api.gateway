@@ -1,0 +1,13 @@
+version: "2"
+services:
+  node:
+    image: "node:16"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - DEV_APP_PORT=${DEV_APP_PORT}
+    volumes:
+      - .:/home/node/app
+    ports:
+      - ${DEV_APP_PORT}:${DEV_APP_PORT}
+    command: "npm run dev"
