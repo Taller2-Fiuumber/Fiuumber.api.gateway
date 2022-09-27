@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.ts",
     "scripts": {
-        "test": "jest --",
+        "test": "jest",
         "coverage": "jest --collectCoverage --",
         "prettier-format": "prettier --config .prettierrc.json 'src/**/*.ts' --write",
         "lint": "eslint . --ext .ts",
