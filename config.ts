@@ -4,6 +4,6 @@ dotenv.config();
 
 export const CONFIG = {
     app: {
-        port: parseInt(process.env.DEV_APP_PORT || '4000'), // PORT env is used by Heroku
+        port: parseInt(process.env.PORT || '4000'), // PORT env is used by Heroku
     }
 };
