@@ -13,6 +13,7 @@ jobs:
         id: heroku
         uses: snithyanantham/docker-compose-multiple-apps-heroku-deploy@v1.0  # use the latest version of the action
         with:
+          envkey_DEV_APP_PORT: 4000
           email: 'ramirezjeremias98@gmail.com' # your heroku email
           api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
           docker_compose_file: 'docker-compose.yml' # set the path to the folder where the docker-compose file is located
