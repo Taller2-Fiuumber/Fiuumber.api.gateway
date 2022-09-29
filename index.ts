@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import { CONFIG } from './config';
 import { GetSomething } from './src/controllers/example';
+import usersRoutes from './src/routes/users.routes';
 
 const app: Express = express();
 
@@ -11,6 +12,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use('/api/users', usersRoutes);
 
 app.get('/api/something', GetSomething);
 
