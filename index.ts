@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import { CONFIG } from './config';
+import { GetSomething } from './src/controllers/example';
 
 const app: Express = express();
 
@@ -10,6 +11,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.get('/api/something', GetSomething);
 
 app.get('/', (req: Request, res: Response) => res.send("Fiuumber API Gateway"));
 
