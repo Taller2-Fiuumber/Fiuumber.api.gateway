@@ -1,4 +1,4 @@
-import axios from 'axios';// For API consuming
+// import axios from 'axios';// For API consuming
 import { User } from '../domain/user';
 
 export const getSomething = (): Promise<User[]> => {

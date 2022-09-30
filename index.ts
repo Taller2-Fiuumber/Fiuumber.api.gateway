@@ -1,8 +1,9 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import cors from 'cors';
 import { initializeApp } from 'firebase/app';
 import { CONFIG } from './config';
-import { GetSomething } from './src/controllers/example';
+import { setupProxies } from './src/middlewares/proxy';
+import { ROUTES } from './src/globals/routes';
 
 const app: Express = express();
 
@@ -25,9 +26,7 @@ initializeApp(firebaseConfig);
 
 app.use(cors(corsOptions));
 
-app.get('/api/something', GetSomething);
-
-app.get('/', (req: Request, res: Response) => res.send("Fiuumber API Gateway"));
+setupProxies(app, ROUTES);
 
 app.listen(CONFIG.app.port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${CONFIG.app.port}`);

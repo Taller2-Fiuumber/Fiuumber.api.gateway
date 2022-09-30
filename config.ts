@@ -4,7 +4,8 @@ dotenv.config();
 
 export const CONFIG = {
     app: {
-        port: parseInt(process.env.PORT || '4000'), // PORT env is used by Heroku
+        port: parseInt(process.env.DEV_APP_PORT || '4000'), // PORT env is used by Heroku
+        tokenSecret: process.env.TOKEN_SECRET || '',
     },
     firebase: {
         apiKey: process.env.API_KEY || "",
@@ -14,5 +15,11 @@ export const CONFIG = {
         messagingSenderId: process.env.MESSAGING_SENDER_ID || "",
         appId: process.env.API_ID || "",
         measurementId: process.env.MEASUREMENT_ID || ""
+    },
+    microservices: {
+        users: {
+            url: process.env.API_USERS_URL,
+            basePath: process.env.API_USERS_BASE_PATH || ''
+        }
     }
 };
