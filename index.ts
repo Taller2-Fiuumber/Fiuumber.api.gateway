@@ -4,6 +4,8 @@ import { initializeApp } from 'firebase/app';
 import { CONFIG } from './config';
 import { setupProxies } from './src/middlewares/proxy';
 import { ROUTES } from './src/globals/routes';
+import bodyParser from 'body-parser';
+import { Register } from './src/controllers/register';
 
 const app: Express = express();
 
@@ -24,7 +26,11 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
+app.use(bodyParser.json());
+
 app.use(cors(corsOptions));
+
+app.post(CONFIG.microservices.users.basePath + '/register', Register);
 
 setupProxies(app, ROUTES);
 
