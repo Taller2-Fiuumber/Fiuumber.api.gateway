@@ -1,3 +1,4 @@
+// import { Request, Response, NextFunction } from 'express';
 import { CONFIG } from '../../config';
 
 export const ROUTES = [
@@ -13,7 +14,10 @@ export const ROUTES = [
             target: CONFIG.microservices.users.url,
             changeOrigin: true,
             pathRewrite: {},
-        }
+            // onProxyRes: (proxyRes: any, req: Request, res: Response) => {
+            //     console.log("Test")
+            // }
+        },
     },
     {
         url: CONFIG.microservices.users.basePath,
