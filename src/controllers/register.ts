@@ -6,9 +6,9 @@ export const Register = async (req: Request, res: Response) => {
   try {
     const user: User = req.body.user;
     console.log(user);
-    const passanger = await register(user);
-    console.log(passanger);
-    res.status(200).send(passanger);
+    const passenger = await register(user);
+    console.log(passenger);
+    res.status(200).send(passenger);
   } catch (error) {
     res.status(500).send(error);
   }
