@@ -5,7 +5,7 @@ import { CONFIG } from './config';
 import { setupProxies } from './src/middlewares/proxy';
 import { ROUTES } from './src/globals/routes';
 import bodyParser from 'body-parser';
-import { Register } from './src/controllers/register';
+import { Register } from './src/controllers/users';
 
 const app: Express = express();
 

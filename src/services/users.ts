@@ -1,50 +1,131 @@
 import axios from 'axios';// For API consuming
 import { CONFIG } from '../../config';
 import { User } from '../domain/user';
-import { generateToken } from './auth';
+import * as firebase_auth from "firebase/auth";
+import { initializeApp} from "firebase/app";
 
 const HEADERS = { headers: { Accept: 'application/json'}};
 
-export const register = async (user: User) => {
-  try {
-    let url: string = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/passenger`;
+const firebaseConfig = {
+  apiKey: CONFIG.firebase.apiKey,
+  authDomain: CONFIG.firebase.authDomain,
+  projectId: CONFIG.firebase.projectId,
+  storageBucket: CONFIG.firebase.storageBucket,
+  messagingSenderId: CONFIG.firebase.messagingSenderId,
+  appId: CONFIG.firebase.appId,
+  measurementId: CONFIG.firebase.measurementId
+};
 
-    const response = await axios.post(url, {...user}, HEADERS,);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-    return response.data;
+// getUser
+export const getUser = async (user: User) => {
+  const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/user`;
+  return await axios.get(url, {params: {userIs: user.userId}});
+};
 
-  } 
-  catch (error) {
-      if (axios.isAxiosError(error)) {
-          console.log('error message: ', error.message);
-      } else {
-          console.log('unexpected error: ', error);
-      }
-      throw error;
+// getAuthUser
+export const getAuthUser = async () => {
+  const auth = firebase_auth.getAuth(app);
+  const user = auth.currentUser;
+  const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/user`;
+  return await axios.get(url, {params: {userIs: user?.uid}});
+};
+
+// registerUserWithEmailAndPassword
+export const registerUserWithEmailAndPassword = async (user: User) => {
+    const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/user`;
+    const res = await axios.post(url, {...user}, HEADERS,);
+    if (!res) {
+      throw Error("Creation failed.");
+    }
+
+    const auth = firebase_auth.getAuth(app);
+    firebase_auth.createUserWithEmailAndPassword(auth, user.email, user.password)
+    .then((userCredential) => {
+       userCredential.user;
+    })
+    .catch((error) => {
+      error; // undo create in users microservice
+    });
+};
+
+// signInWithEmailAndPassword
+export const signInWithEmailAndPassword = async (user: User) => {
+  const auth = firebase_auth.getAuth(app);
+  firebase_auth.createUserWithEmailAndPassword(auth, user.email, user.password)
+  .then((userCredential) => {
+    userCredential.user
+  })
+  .catch((error) => {
+    error
+  });
+};
+
+// onAuthStateChanged
+export const onAuthStateChanged = async () => {
+  const auth = firebase_auth.getAuth(app);
+  firebase_auth.onAuthStateChanged(auth, (user) => {
+    if (user) {
+      user.uid
+    } else {
+      null
+    }
+  });
+
+};
+
+// updatePassword
+export const updatePassword = async (newPassword: string) => {
+  const auth = firebase_auth.getAuth(app);
+  const user = auth.currentUser;
+  if (user != null) {
+    firebase_auth.updatePassword(user, newPassword).then(() => {
+      // Update successful.
+    }).catch((error) => {
+      error
+    });
   }
 };
 
-export const loginWithEmailAndPassword = async (email: string, password: string) => {
-  try {
-    let url: string = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/users`;
-    // TODO: traer user que cumpla con email y password. Crear endpoint en el MS si no está
+// updateProfile
+export const updateProfile = async (user: User) => {
+  const auth = firebase_auth.getAuth(app);
+  const userFirebase = auth.currentUser;
+  if (userFirebase != null) {
+    firebase_auth.updateEmail(userFirebase, user.email).then(() => {
+      // Update successful.
+    }).catch((error) => {
+      error
+    });
+  }
 
-    const response = await axios.get(url, HEADERS,);
+  const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/user`;
+  const res = await axios.put(url, {...user}, HEADERS,);
+  if (!res) {
+    throw Error("Creation failed.");
+  }
+};
 
-    if (!!response) {
-      const token = generateToken(response.data);
-      return {token: token, user: response.data};
-    }
-    else {
-      throw Error("Unauthorized");
-    }
-  } 
-  catch (error) {
-      if (axios.isAxiosError(error)) {
-          console.log('error message: ', error.message);
-      } else {
-          console.log('unexpected error: ', error);
-      }
-      throw error;
+
+// deleteUser
+export const deleteUser = async () => {
+  const auth = firebase_auth.getAuth(app);
+  const user = auth.currentUser;
+  if (!user) {
+    throw Error("Delation failed.");
+  }
+
+  firebase_auth.deleteUser(user).then(() => {
+    // User deleted.
+  }).catch((error) => {
+    error
+  });
+
+  const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/user`;
+  const res = await axios.delete(url, {params: {user: user.getIdToken}},);
+  if (!res) {
+    throw Error("Creation failed."); // undo delete in firebase
   }
 };
