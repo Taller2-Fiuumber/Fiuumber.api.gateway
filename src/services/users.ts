@@ -8,7 +8,7 @@ const HEADERS = { headers: { Accept: 'application/json'}};
 
 export const registerPassenger = async (user: Passenger) => {
   try {
-    let url: string = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/passenger`;
+    const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/passenger`;
 
     const response = await axios.post(url, {...user}, HEADERS,);
 
@@ -27,7 +27,7 @@ export const registerPassenger = async (user: Passenger) => {
 
 export const registerDriver = async (user: Driver) => {
   try {
-    let url: string = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/driver`;
+    const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/driver`;
 
     const response = await axios.post(url, {...user}, HEADERS,);
 
@@ -44,14 +44,14 @@ export const registerDriver = async (user: Driver) => {
   }
 };
 
-export const loginWithEmailAndPassword = async (email: string, password: string) => {
+export const loginWithEmailAndPassword = async (_email: string, _password: string) => {
   try {
-    let url: string = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/users`;
+    const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/users`;
     // TODO: traer user que cumpla con email y password. Crear endpoint en el MS si no está
 
     const response = await axios.get(url, HEADERS,);
 
-    if (!!response) {
+    if (response) {
       const token = generateToken(response.data);
       return {token: token, user: response.data};
     }

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { CONFIG } from '../../config';
-import { User } from '../domain/user';
+import { User } from '../domain/passenger';
 
 export const generateToken = (user: User) => {
     const token = jwt.sign(
