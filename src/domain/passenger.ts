@@ -1,3 +1,10 @@
-import { User } from "./user";
-
-export interface Passenger extends User {}
+export interface Passenger {
+    userId: number;
+    username: string;
+    password: string;
+    email: string;
+    firstName: string; 
+    lastName: string;
+    adress: string; 
+    privateKey: string;
+}
