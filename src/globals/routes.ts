@@ -16,4 +16,13 @@ export const ROUTES = [
             pathRewrite: {/* [`^/api/v1/`]: '',*/},
         }
     },
+    // For ws implementation
+    // {
+    //     target: 'http://localhost:3000',
+    //     ws: true,
+    //     pathFilter: '/socket',
+    //     pathRewrite: {
+    //         '^/socket': '',
+    //     },
+    // }
 ]
