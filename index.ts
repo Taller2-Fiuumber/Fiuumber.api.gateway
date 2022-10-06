@@ -1,8 +1,11 @@
 import express, { Express } from 'express';
 import cors from 'cors';
+import { initializeApp } from 'firebase/app';
 import { CONFIG } from './config';
 import { setupProxies } from './src/middlewares/proxy';
 import { ROUTES } from './src/globals/routes';
+import bodyParser from 'body-parser';
+import { RegisterDriver, RegisterPassenger } from './src/controllers/register';
 
 const app: Express = express();
 
@@ -11,7 +14,24 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
+const firebaseConfig = {
+  apiKey: CONFIG.firebase.apiKey,
+  authDomain: CONFIG.firebase.authDomain,
+  projectId: CONFIG.firebase.projectId,
+  storageBucket: CONFIG.firebase.storageBucket,
+  messagingSenderId: CONFIG.firebase.messagingSenderId,
+  appId: CONFIG.firebase.appId,
+  measurementId: CONFIG.firebase.measurementId
+};
+
+initializeApp(firebaseConfig);
+
+app.use(bodyParser.json());
+
 app.use(cors(corsOptions));
+
+app.post(CONFIG.microservices.users.basePath + '/register-passenger', RegisterPassenger);
+app.post(CONFIG.microservices.users.basePath + '/register-driver', RegisterDriver);
 
 setupProxies(app, ROUTES);
 
