@@ -1,14 +1,30 @@
 import { Request, Response } from "express";
-import { User } from "../domain/user";
-import { register } from "../services/users";
+import { Driver } from "../domain/driver";
+import { Passenger } from "../domain/passenger";
+import { generateToken } from "../services/auth";
+import { registerPassenger } from "../services/users";
 
-export const Register = async (req: Request, res: Response) => {
+export const RegisterPassenger = async (req: Request, res: Response) => {
   try {
-    const user: User = req.body.user;
-    console.log(user);
-    const passenger = await register(user);
+    let passenger: Passenger = req.body.passenger;
+    passenger = await registerPassenger(passenger);
+    const token: string = generateToken(passenger);
+    console.log(token);
     console.log(passenger);
-    res.status(200).send(passenger);
+    res.status(200).send({user: passenger, token: token});
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export const RegisterDriver = async (req: Request, res: Response) => {
+  try {
+    let passenger: Driver = req.body.driver;
+    passenger = await registerPassenger(passenger);
+    const token: string = generateToken(passenger);
+    console.log(token);
+    console.log(passenger);
+    res.status(200).send({user: passenger, token: token});
   } catch (error) {
     res.status(500).send(error);
   }

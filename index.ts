@@ -5,7 +5,7 @@ import { CONFIG } from './config';
 import { setupProxies } from './src/middlewares/proxy';
 import { ROUTES } from './src/globals/routes';
 import bodyParser from 'body-parser';
-import { Register } from './src/controllers/register';
+import { RegisterDriver, RegisterPassenger } from './src/controllers/register';
 
 const app: Express = express();
 
@@ -30,7 +30,8 @@ app.use(bodyParser.json());
 
 app.use(cors(corsOptions));
 
-app.post(CONFIG.microservices.users.basePath + '/register', Register);
+app.post(CONFIG.microservices.users.basePath + '/register-passenger', RegisterPassenger);
+app.post(CONFIG.microservices.users.basePath + '/register-driver', RegisterDriver);
 
 setupProxies(app, ROUTES);
 
