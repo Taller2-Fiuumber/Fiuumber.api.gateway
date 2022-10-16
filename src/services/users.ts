@@ -6,6 +6,8 @@ import { generateToken } from './auth';
 
 const HEADERS = { headers: { Accept: 'application/json'}};
 
+const URL_USERS = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}`;
+
 export const registerPassenger = async (user: Passenger) => {
   try {
     const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/passenger`;
@@ -46,8 +48,7 @@ export const registerDriver = async (user: Driver) => {
 
 export const loginWithEmailAndPassword = async (_email: string, _password: string) => {
   try {
-    const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/users`;
-    // TODO: traer user que cumpla con email y password. Crear endpoint en el MS si no está
+    const url = `${URL_USERS}/login?email=${_email}&password=${_password}`;
 
     const response = await axios.get(url, HEADERS,);
 
@@ -56,7 +57,7 @@ export const loginWithEmailAndPassword = async (_email: string, _password: strin
       return {token: token, user: response.data};
     }
     else {
-      throw Error("Unauthorized");
+      throw Error("Unauthorized: incorrect email or password");
     }
   } 
   catch (error) {

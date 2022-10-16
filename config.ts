@@ -6,6 +6,7 @@ export const CONFIG = {
     app: {
         port: parseInt(process.env.DEV_APP_PORT || '4000'), // PORT env is used by Heroku
         tokenSecret: process.env.TOKEN_SECRET || '',
+        devMode: !!process.env.DEV_MODE
     },
     firebase: {
         apiKey: process.env.API_KEY || "",
