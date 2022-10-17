@@ -9,6 +9,8 @@ import { RegisterDriver, RegisterPassenger } from './src/controllers/register';
 import { LoginWithEmailAndPassword } from './src/controllers/login';
 import { Welcome } from './src/controllers/welcome';
 
+console.log(CONFIG.microservices.users.basePath)
+
 const app: Express = express();
 
 const corsOptions = {
