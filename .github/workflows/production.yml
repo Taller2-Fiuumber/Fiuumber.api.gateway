@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'feature/pipeline'
 jobs:
   linter:
     name: Format and lint
@@ -34,7 +35,17 @@ jobs:
       CI_IMAGE_NAME: ${{ github.repository }}
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_USERNAME: ${{ github.actor }}
-      HEROKU_APP: fiuumber-gateway
+      HEROKU_APP: fiuumber-gateway-1
+      FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+      FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+      FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+      FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+      FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+      FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+      FIREBASE_API_ID: ${{ secrets.FIREBASE_API_ID }}
+      API_USERS_URL: ${{ secrets.API_USERS_URL }}
+      API_USERS_BASE_PATH: ${{ secrets.API_USERS_BASE_PATH }}
+      TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
     steps:
       - uses: actions/checkout@master
 
@@ -53,8 +64,28 @@ jobs:
           IMAGE_NAME=$(echo "$IMAGE_NAME" | tr '[:upper:]' '[:lower:]')
           echo "IMAGE_TAG=$(echo $IMAGE_NAME:$VERSION)" >> $GITHUB_ENV
       - name: Build image
-        run: docker build . -t ${{ env.IMAGE_TAG }}
-
+        env:
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+          FIREBASE_API_ID: ${{ secrets.FIREBASE_API_ID }}
+          API_USERS_URL: ${{ secrets.API_USERS_URL }}
+          API_USERS_BASE_PATH: ${{ secrets.API_USERS_BASE_PATH }}
+          TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
+        run: docker build -t ${{ env.IMAGE_TAG }} .
+          --build-arg firebase_api_key=${{ env.FIREBASE_API_KEY }}
+          --build-arg firebase_auth_domain=${{ env.FIREBASE_AUTH_DOMAIN }}
+          --build-arg firebase_project_id=${{ env.FIREBASE_PROJECT_ID }}
+          --build-arg firebase_storage_bucket=${{ env.FIREBASE_STORAGE_BUCKET }}
+          --build-arg firebase_messaging_sender_id=${{ env.FIREBASE_MESSAGING_SENDER_ID }}
+          --build-arg firebase_api_id=${{ env.FIREBASE_API_ID }}
+          --build-arg firebase_measurement_id=${{ env.FIREBASE_MEASUREMENT_ID }}
+          --build-arg api_users_url=${{ env.API_USERS_URL }}
+          --build-arg api_users_base_path=${{ env.API_USERS_BASE_PATH }}
+          --build-arg token_secret=${{ env.TOKEN_SECRET }}
       - name: Push image to Github Container Registry
         run: docker push ${{ env.IMAGE_TAG }}
 
@@ -67,12 +98,22 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: docker tag ${{ env.IMAGE_TAG }} registry.heroku.com/${{ env.HEROKU_APP}}/web
-
       - name: Push container to Heroku Container Registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:push web --app ${{ env.HEROKU_APP}}
-
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+          FIREBASE_API_ID: ${{ secrets.FIREBASE_API_ID }}
+          API_USERS_URL: ${{ secrets.API_USERS_URL }}
+          API_USERS_BASE_PATH: ${{ secrets.API_USERS_BASE_PATH }}
+          TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
+        run: heroku container:push web
+          --arg firebase_api_key=${{ env.FIREBASE_API_KEY }},firebase_auth_domain=${{ env.FIREBASE_AUTH_DOMAIN }},firebase_project_id=${{ env.FIREBASE_PROJECT_ID }},firebase_storage_bucket=${{ env.FIREBASE_STORAGE_BUCKET }},firebase_messaging_sender_id=${{ env.FIREBASE_MESSAGING_SENDER_ID }},firebase_api_id=${{ env.FIREBASE_API_ID }},firebase_measurement_id=${{ env.FIREBASE_MEASUREMENT_ID }},api_users_url=${{ env.API_USERS_URL }},api_users_base_path=${{ env.API_USERS_BASE_PATH }},token_secret=${{ env.TOKEN_SECRET }}
+          --app ${{ env.HEROKU_APP}}
       - name: Release container to Heroku Container Registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
