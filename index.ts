@@ -40,5 +40,5 @@ app.get('/', Welcome);
 setupProxies(app, ROUTES);
 
 app.listen(CONFIG.app.port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${CONFIG.app.port}`);
+  console.log(`⚡️[server]: Server is running at port ${CONFIG.app.port}`);
 });

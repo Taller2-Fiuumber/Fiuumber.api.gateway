@@ -22,11 +22,14 @@ ENV FIREBASE_PROJECT_ID=${firebase_project_id}
 ARG firebase_storage_bucket
 ENV FIREBASE_STORAGE_BUCKET=${firebase_storage_bucket}
 
-ARG firebase_messagind_sender_id
-ENV FIREBASE_MESSAGING_SENDER_ID=${firebase_messagind_sender_id}
+ARG firebase_messaging_sender_id
+ENV FIREBASE_MESSAGING_SENDER_ID=${firebase_messaging_sender_id}
 
 ARG firebase_measurement_id
 ENV FIREBASE_MEASUREMENT_ID=${firebase_measurement_id}
+
+ARG firebase_api_id
+ENV FIREBASE_API_ID=${firebase_api_id}
 
 # Microservices env
 
