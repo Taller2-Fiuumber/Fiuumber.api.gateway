@@ -4,7 +4,7 @@ import { CONFIG } from '../../config';
 export const ROUTES = [
     {
         url: CONFIG.microservices.users.basePath,
-        auth: true,
+        auth: (true && !CONFIG.app.devMode),
         creditCheck: false,
         rateLimit: {
             windowMs: 15 * 60 * 1000,

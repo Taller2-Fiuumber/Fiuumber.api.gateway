@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:18-alpine3.15 as builder
+FROM node:18 as builder
 
 RUN mkdir /app
 WORKDIR /app
@@ -8,6 +8,6 @@ COPY . /app
 RUN npm install
 RUN npm run build
 
-ENV PORT=8080
-EXPOSE 8080
+ENV PORT 1234
 
+EXPOSE ${PORT}
