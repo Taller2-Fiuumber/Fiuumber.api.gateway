@@ -64,6 +64,17 @@ jobs:
           IMAGE_NAME=$(echo "$IMAGE_NAME" | tr '[:upper:]' '[:lower:]')
           echo "IMAGE_TAG=$(echo $IMAGE_NAME:$VERSION)" >> $GITHUB_ENV
       - name: Build image
+        env:
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+          FIREBASE_API_ID: ${{ secrets.FIREBASE_API_ID }}
+          API_USERS_URL: ${{ secrets.API_USERS_URL }}
+          API_USERS_BASE_PATH: ${{ secrets.API_USERS_BASE_PATH }}
+          TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
         run: docker build . -t ${{ env.IMAGE_TAG }}
           --build-arg firebase_api_key=${{ env.FIREBASE_API_KEY }}
           --build-arg firebase_auth_domain=${{ env.FIREBASE_AUTH_DOMAIN }}
@@ -90,6 +101,16 @@ jobs:
       - name: Push container to Heroku Container Registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+          FIREBASE_API_ID: ${{ secrets.FIREBASE_API_ID }}
+          API_USERS_URL: ${{ secrets.API_USERS_URL }}
+          API_USERS_BASE_PATH: ${{ secrets.API_USERS_BASE_PATH }}
+          TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
         run: heroku container:push web --app ${{ env.HEROKU_APP}}
           --arg firebase_api_key=${{ env.FIREBASE_API_KEY }}
           --arg firebase_auth_domain=${{ env.FIREBASE_AUTH_DOMAIN }}

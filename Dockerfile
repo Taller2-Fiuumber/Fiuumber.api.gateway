@@ -34,7 +34,7 @@ ENV FIREBASE_API_ID=${firebase_api_id}
 # Microservices env
 
 ARG api_users_url
-ENV API_USERS_URL="https://fiuumber-api-users.herokuapp.com"
+ENV API_USERS_URL=${api_users_url}
 
 ARG api_users_base_path
 ENV API_USERS_BASE_PATH=${api_users_base_path}
