@@ -75,7 +75,7 @@ jobs:
           API_USERS_URL: ${{ secrets.API_USERS_URL }}
           API_USERS_BASE_PATH: ${{ secrets.API_USERS_BASE_PATH }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
-        run: docker build . -t ${{ env.IMAGE_TAG }}
+        run: docker build -t ${{ env.IMAGE_TAG }} .
           --build-arg firebase_api_key=${{ env.FIREBASE_API_KEY }}
           --build-arg firebase_auth_domain=${{ env.FIREBASE_AUTH_DOMAIN }}
           --build-arg firebase_project_id=${{ env.FIREBASE_PROJECT_ID }}
@@ -111,7 +111,7 @@ jobs:
           API_USERS_URL: ${{ secrets.API_USERS_URL }}
           API_USERS_BASE_PATH: ${{ secrets.API_USERS_BASE_PATH }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
-        run: heroku container:push web --app ${{ env.HEROKU_APP}}
+        run: heroku container:push web
           --arg firebase_api_key=${{ env.FIREBASE_API_KEY }}
           --arg firebase_auth_domain=${{ env.FIREBASE_AUTH_DOMAIN }}
           --arg firebase_project_id=${{ env.FIREBASE_PROJECT_ID }}
@@ -122,6 +122,7 @@ jobs:
           --arg api_users_url=${{ env.API_USERS_URL }}
           --arg api_users_base_path=${{ env.API_USERS_BASE_PATH }}
           --arg token_secret=${{ env.TOKEN_SECRET }}
+          --app ${{ env.HEROKU_APP}}
       - name: Release container to Heroku Container Registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
