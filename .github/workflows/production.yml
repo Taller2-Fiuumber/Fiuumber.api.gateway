@@ -35,7 +35,7 @@ jobs:
       CI_IMAGE_NAME: ${{ github.repository }}
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_USERNAME: ${{ github.actor }}
-      HEROKU_APP: fiuumber-gateway
+      HEROKU_APP: fiuumber-gateway-1
     steps:
       - uses: actions/checkout@master
 
