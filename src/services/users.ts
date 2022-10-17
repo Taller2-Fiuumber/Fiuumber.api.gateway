@@ -52,20 +52,11 @@ export const loginWithEmailAndPassword = async (_email: string, _password: strin
 
     const response = await axios.get(url, HEADERS,);
 
-    if (response) {
-      const token = generateToken(response.data);
-      return {token: token, user: response.data};
-    }
-    else {
-      throw Error("Unauthorized: incorrect email or password");
-    }
+    const token = generateToken(response.data);
+    return {token: token, user: response.data};
   } 
-  catch (error) {
-      if (axios.isAxiosError(error)) {
-          console.log('error message: ', error.message);
-      } else {
-          console.log('unexpected error: ', error);
-      }
+  catch (error: any) {
+      if (error.response.status == 401) return null;
       throw error;
   }
 };
