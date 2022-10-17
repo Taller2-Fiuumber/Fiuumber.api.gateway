@@ -7,6 +7,7 @@ import { ROUTES } from './src/globals/routes';
 import bodyParser from 'body-parser';
 import { RegisterDriver, RegisterPassenger } from './src/controllers/register';
 import { LoginWithEmailAndPassword } from './src/controllers/login';
+import { Welcome } from './src/controllers/welcome';
 
 const app: Express = express();
 
@@ -34,6 +35,7 @@ app.use(cors(corsOptions));
 app.post(CONFIG.microservices.users.basePath + '/register-passenger', RegisterPassenger);
 app.post(CONFIG.microservices.users.basePath + '/register-driver', RegisterDriver);
 app.get(CONFIG.microservices.users.basePath + '/login', LoginWithEmailAndPassword);
+app.get('/', Welcome);
 
 setupProxies(app, ROUTES);
 
