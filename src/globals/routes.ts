@@ -16,6 +16,20 @@ export const ROUTES = [
             pathRewrite: {/* [`^/api/v1/`]: '',*/},
         }
     },
+    {
+        url: CONFIG.microservices.trips.basePath,
+        auth: (true && !CONFIG.app.devMode),
+        creditCheck: false,
+        rateLimit: {
+            windowMs: 15 * 60 * 1000,
+            max: 5
+        },
+        proxy: {
+            target: CONFIG.microservices.trips.url,
+            changeOrigin: true,
+            pathRewrite: {/* [`^/api/v1/`]: '',*/},
+        }
+    },
     // For ws implementation
     // {
     //     target: 'http://localhost:3000',
