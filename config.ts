@@ -21,6 +21,10 @@ export const CONFIG = {
         users: {
             url: process.env.API_USERS_URL || '',
             basePath: process.env.API_USERS_BASE_PATH || ''
+        },
+        trips: {
+            url: process.env.API_TRIPS_URL || '',
+            basePath: process.env.API_TRIPS_BASE_PATH || ''
         }
     }
 };

@@ -8,13 +8,14 @@ services:
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     ports:
-      - "8080:8080"
+      - "1234:1234"
     expose:
+      - 1234
       - 8080
     volumes:
         - ./:/app
     environment:
-        PORT: 8080
+        PORT: 1234
     networks:
       - default
 
