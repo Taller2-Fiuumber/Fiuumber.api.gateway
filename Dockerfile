@@ -11,6 +11,8 @@ ARG firebase_measurement_id
 ARG firebase_api_id
 ARG api_users_url
 ARG api_users_base_path
+ARG api_trips_url
+ARG api_trips_base_path
 ARG token_secret
 
 ENV FIREBASE_API_KEY=${firebase_api_key}
@@ -22,6 +24,8 @@ ENV FIREBASE_MEASUREMENT_ID=${firebase_measurement_id}
 ENV FIREBASE_API_ID=${firebase_api_id}
 ENV API_USERS_URL=${api_users_url}
 ENV API_USERS_BASE_PATH=${api_users_base_path}
+ENV API_TRIPS_URL=${api_trips_url}
+ENV API_TRIPS_BASE_PATH=${api_trips_base_path}
 ENV TOKEN_SECRET=${token_secret}
 
 RUN mkdir /app
