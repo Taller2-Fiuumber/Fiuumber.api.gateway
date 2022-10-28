@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: "sh"
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     ports:
@@ -12,17 +11,20 @@ services:
     expose:
       - 1234
       - 8080
+      - 8081
     volumes:
         - ./:/app
     environment:
         PORT: 1234
     networks:
       - default
+      - gateway
 
 networks:
   default:
     name: localdev
-
+  gateway:
+    name: gateway
 volumes:
-  database_data:
+  local:
     driver: local
