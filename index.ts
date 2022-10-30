@@ -5,7 +5,7 @@ import { CONFIG } from './config';
 import { setupProxies } from './src/middlewares/proxy';
 import { ROUTES } from './src/globals/routes';
 import bodyParser from 'body-parser';
-import { RegisterDriver, RegisterPassenger, Test } from './src/controllers/register';
+import { RegisterDriver, RegisterPassenger } from './src/controllers/register';
 import { LoginWithEmailAndPassword } from './src/controllers/login';
 import { Welcome } from './src/controllers/welcome';
 
