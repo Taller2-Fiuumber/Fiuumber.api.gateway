@@ -5,7 +5,7 @@ import { CONFIG } from './config';
 import { setupProxies } from './src/middlewares/proxy';
 import { ROUTES } from './src/globals/routes';
 import bodyParser from 'body-parser';
-import { RegisterDriver, RegisterPassenger } from './src/controllers/register';
+import { RegisterDriver, RegisterPassenger, Test } from './src/controllers/register';
 import { LoginWithEmailAndPassword } from './src/controllers/login';
 import { Welcome } from './src/controllers/welcome';
 
@@ -30,6 +30,8 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
+setupProxies(app, ROUTES);
+
 app.use(bodyParser.json());
 
 app.use(cors(corsOptions));
@@ -39,7 +41,7 @@ app.post(CONFIG.microservices.users.basePath + '/register-driver', RegisterDrive
 app.get(CONFIG.microservices.users.basePath + '/login', LoginWithEmailAndPassword);
 app.get('/', Welcome);
 
-setupProxies(app, ROUTES);
+
 
 app.listen(CONFIG.app.port, () => {
   console.log(`⚡️[server]: Server is running at port ${CONFIG.app.port}`);
