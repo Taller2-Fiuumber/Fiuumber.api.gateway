@@ -28,20 +28,19 @@ const firebaseConfig = {
   measurementId: CONFIG.firebase.measurementId
 };
 
+app.use(cors(corsOptions));
+
 initializeApp(firebaseConfig);
 
 setupProxies(app, ROUTES);
 
 app.use(bodyParser.json());
 
-app.use(cors(corsOptions));
+app.post('/api/auth/register-passenger', RegisterPassenger);
+app.post('/api/auth/register-driver', RegisterDriver);
+app.get('/api/auth/login', LoginWithEmailAndPassword);
 
-app.post(CONFIG.microservices.users.basePath + '/register-passenger', RegisterPassenger);
-app.post(CONFIG.microservices.users.basePath + '/register-driver', RegisterDriver);
-app.get(CONFIG.microservices.users.basePath + '/login', LoginWithEmailAndPassword);
 app.get('/', Welcome);
-
-
 
 app.listen(CONFIG.app.port, () => {
   console.log(`⚡️[server]: Server is running at port ${CONFIG.app.port}`);
