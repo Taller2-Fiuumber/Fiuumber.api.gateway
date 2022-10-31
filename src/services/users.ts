@@ -10,20 +10,14 @@ const URL_USERS = `${CONFIG.microservices.users.url}${CONFIG.microservices.users
 
 export const registerPassenger = async (user: Passenger) => {
   try {
-    console.log("REGISTER PASSENGER");
     const url = `${CONFIG.microservices.users.url}${CONFIG.microservices.users.basePath}/passenger`;
-    console.log(url);
 
     const response = await axios.post(url, {...user}, HEADERS,);
-
-    console.log(response.data);
 
     return response.data;
 
   } 
   catch (error) {
-    console.log("ERROR");
-      console.log(error);
       if (axios.isAxiosError(error)) {
           console.log('error message: ', error.message);
       } else {
