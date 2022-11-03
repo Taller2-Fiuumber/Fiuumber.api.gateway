@@ -1,5 +1,4 @@
-import {Wallet} from "./wallet"
-export interface Passenger {
+export interface Administrator {
     userId: number;
     username: string;
     password: string;
@@ -7,5 +6,5 @@ export interface Passenger {
     firstName: string;
     lastName: string;
     address: string;
-    wallet: Wallet;
+    privateKey: string;
 }
