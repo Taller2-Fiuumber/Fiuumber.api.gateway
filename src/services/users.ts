@@ -16,7 +16,7 @@ export const registerPassenger = async (user: Passenger) => {
 
     return response.data;
 
-  } 
+  }
   catch (error) {
       if (axios.isAxiosError(error)) {
           console.log('error message: ', error.message);
@@ -35,7 +35,7 @@ export const registerDriver = async (user: Driver) => {
 
     return response.data;
 
-  } 
+  }
   catch (error) {
       if (axios.isAxiosError(error)) {
           console.log('error message: ', error.message);
@@ -54,7 +54,7 @@ export const loginWithEmailAndPassword = async (_email: string, _password: strin
 
     const token = generateToken(response.data);
     return {token: token, user: response.data};
-  } 
+  }
   catch (error: any) {
       if (error.response.status == 401) return null;
       throw error;

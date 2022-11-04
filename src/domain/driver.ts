@@ -1,11 +1,6 @@
-import { Passenger } from "./passenger";
+import { User } from "./user";
+import { DriverVehicle } from "./driver_vehicle";
 
-export interface Driver extends Passenger {
-    // TODO: add vehicle data
-    domain: string;
-    modelYear: number;
-    colorName: string;
-    brandId: number;
-    modelId: number;
-    image: string;
+export interface Driver extends User {
+   vehicle: DriverVehicle;
 }
