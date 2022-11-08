@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 app.post('/api/auth/register-passenger', RegisterPassenger);
 app.post('/api/auth/register-driver', RegisterDriver);
 app.get('/api/auth/login', LoginUserWithEmailAndPassword);
-app.get('/api/auth/login/type?administrator', LoginAdministratorWithEmailAndPassword);
+app.get('/api/auth/administrator/login', LoginAdministratorWithEmailAndPassword);
 
 app.get('/', Welcome);
 
