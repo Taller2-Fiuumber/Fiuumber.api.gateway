@@ -46,9 +46,24 @@ export const registerDriver = async (user: Driver) => {
   }
 };
 
-export const loginWithEmailAndPassword = async (_email: string, _password: string) => {
+export const loginUserWithEmailAndPassword = async (_email: string, _password: string) => {
   try {
-    const url = `${URL_USERS}/login?email=${_email}&password=${_password}`;
+    const url = `${URL_USERS}/users/login?email=${_email}&password=${_password}`;
+
+    const response = await axios.get(url, HEADERS,);
+
+    const token = generateToken(response.data);
+    return {token: token, user: response.data};
+  }
+  catch (error: any) {
+      if (error.response.status == 401) return null;
+      throw error;
+  }
+};
+
+export const loginAdministratorWithEmailAndPassword = async (_email: string, _password: string) => {
+  try {
+    const url = `${URL_USERS}/administrators/login?email=${_email}&password=${_password}`;
 
     const response = await axios.get(url, HEADERS,);
 

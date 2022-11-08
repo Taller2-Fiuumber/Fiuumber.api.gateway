@@ -6,7 +6,7 @@ import { setupProxies } from './src/middlewares/proxy';
 import { ROUTES } from './src/globals/routes';
 import bodyParser from 'body-parser';
 import { RegisterDriver, RegisterPassenger } from './src/controllers/register';
-import { LoginWithEmailAndPassword } from './src/controllers/login';
+import { LoginUserWithEmailAndPassword, LoginAdministratorWithEmailAndPassword } from './src/controllers/login';
 import { Welcome } from './src/controllers/welcome';
 
 console.log(CONFIG.microservices.users.basePath)
@@ -38,7 +38,8 @@ app.use(bodyParser.json());
 
 app.post('/api/auth/register-passenger', RegisterPassenger);
 app.post('/api/auth/register-driver', RegisterDriver);
-app.get('/api/auth/login', LoginWithEmailAndPassword);
+app.get('/api/auth/login', LoginUserWithEmailAndPassword);
+app.get('/api/auth/login/type?administrator', LoginAdministratorWithEmailAndPassword);
 
 app.get('/', Welcome);
 
