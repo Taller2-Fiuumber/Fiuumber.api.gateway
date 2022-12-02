@@ -13,6 +13,8 @@ ARG api_users_url
 ARG api_users_base_path
 ARG api_trips_url
 ARG api_trips_base_path
+ARG api_payments_url
+ARG api_payments_base_path
 ARG token_secret
 
 ENV FIREBASE_API_KEY=${firebase_api_key}

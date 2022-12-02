@@ -91,6 +91,8 @@ jobs:
           --build-arg api_users_base_path=${{ env.API_USERS_BASE_PATH }}
           --build-arg api_trips_url=${{ env.API_TRIPS_URL }}
           --build-arg api_trips_base_path=${{ env.API_TRIPS_BASE_PATH }}
+          --build-arg api_payments_url=${{ env.API_PAYMENTS_URL }}
+          --build-arg api_payments_base_path=${{ env.API_PAYMENTS_BASE_PATH }}
           --build-arg token_secret=${{ env.TOKEN_SECRET }}
       - name: Push image to Github Container Registry
         run: docker push ${{ env.IMAGE_TAG }}
