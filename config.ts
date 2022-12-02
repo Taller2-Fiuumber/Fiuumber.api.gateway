@@ -25,6 +25,10 @@ export const CONFIG = {
         trips: {
             url: process.env.API_TRIPS_URL || '',
             basePath: process.env.API_TRIPS_BASE_PATH || ''
+        },
+        payments: {
+            url: process.env.API_PAYMENTS_URL || '',
+            basePath: process.env.API_PAYMENTS_BASE_PATH || ''
         }
     }
 };
