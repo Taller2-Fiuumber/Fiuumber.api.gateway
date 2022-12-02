@@ -26,6 +26,8 @@ ENV API_USERS_URL=${api_users_url}
 ENV API_USERS_BASE_PATH=${api_users_base_path}
 ENV API_TRIPS_URL=${api_trips_url}
 ENV API_TRIPS_BASE_PATH=${api_trips_base_path}
+ENV API_PAYMENTS_URL=${api_payments_url}
+ENV API_PAYMENTS_BASE_PATH=${api_payments_base_path}
 ENV TOKEN_SECRET=${token_secret}
 
 RUN mkdir /app
